@@ -29,7 +29,7 @@ const FoodCard: React.FC<FoodCardProps> = ({ item: initialItem, onAddToCart, car
   };
 
   const toggleProtein = (protein: ProteinOption) => {
-    setSelectedProteins(prev => 
+    setSelectedProteins(prev =>
       prev.find(p => p.id === protein.id)
         ? prev.filter(p => p.id !== protein.id)
         : [...prev, protein]
@@ -47,9 +47,9 @@ const FoodCard: React.FC<FoodCardProps> = ({ item: initialItem, onAddToCart, car
     <div className="group relative bg-white rounded-[2.5rem] p-4 flex flex-col h-full transition-all duration-700 hover:shadow-[0_40px_80px_-20px_rgba(69,26,3,0.12)] border border-stone-100/40 hover:border-amber-200">
       {/* Refined Image */}
       <div className="relative h-72 rounded-[2rem] overflow-hidden mb-8 shadow-md">
-        <img 
-          src={selectedItem.image} 
-          alt={selectedItem.name} 
+        <img
+          src={selectedItem.image}
+          alt={selectedItem.name}
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-[1.5s] ease-out"
         />
         <div className="absolute top-5 left-5 flex gap-2">
@@ -76,7 +76,7 @@ const FoodCard: React.FC<FoodCardProps> = ({ item: initialItem, onAddToCart, car
             ₦{calculateTotalPrice().toLocaleString()}
           </span>
         </div>
-        
+
         <p className="text-stone-400 text-base mb-8 leading-relaxed font-medium line-clamp-2">
           {selectedItem.description}
         </p>
@@ -84,7 +84,7 @@ const FoodCard: React.FC<FoodCardProps> = ({ item: initialItem, onAddToCart, car
         {/* Grain Base Selector */}
         {isGrainItem && (
           <div className="mb-6 space-y-6">
-            <div className="bg-amber-50 rounded-2xl p-4 border border-amber-100 shadow-inner">
+            <div className="bg-amber-400 rounded-2xl p-4 border border-amber-100 shadow-inner">
               <div className="flex items-center gap-2 mb-4">
                 <Layers size={14} className="text-amber-800" />
                 <span className="text-[10px] font-black uppercase tracking-[0.2em] text-amber-900">Switch Delicacy</span>
@@ -98,11 +98,10 @@ const FoodCard: React.FC<FoodCardProps> = ({ item: initialItem, onAddToCart, car
                   <button
                     key={base.id}
                     onClick={() => handleBaseChange(base.id)}
-                    className={`py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border ${
-                      selectedItem.id === base.id 
-                      ? 'bg-amber-950 text-white border-amber-950 shadow-lg scale-[1.05]' 
+                    className={`py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border ${selectedItem.id === base.id
+                      ? 'bg-amber-400 text-white border-white shadow-lg scale-[1.05]'
                       : 'bg-white text-stone-400 border-stone-200 hover:border-amber-800 hover:text-amber-800'
-                    }`}
+                      }`}
                   >
                     {base.label}
                   </button>
@@ -112,27 +111,27 @@ const FoodCard: React.FC<FoodCardProps> = ({ item: initialItem, onAddToCart, car
 
             {/* Protein Selection */}
             <div className="bg-stone-50 rounded-2xl p-5 border border-stone-100">
-               <span className="text-[10px] font-black uppercase tracking-[0.2em] text-amber-950 block mb-4">Choose Your Protein</span>
-               <div className="space-y-3">
-                  {PROTEIN_OPTIONS.map(protein => {
-                    const isActive = selectedProteins.find(p => p.id === protein.id);
-                    return (
-                      <button 
-                        key={protein.id}
-                        onClick={() => toggleProtein(protein)}
-                        className={`w-full flex items-center justify-between p-3 rounded-xl border transition-all ${isActive ? 'bg-amber-100 border-amber-400' : 'bg-white border-stone-200 hover:border-amber-300'}`}
-                      >
-                        <div className="flex items-center gap-3">
-                          <div className={`w-5 h-5 rounded-md flex items-center justify-center border transition-all ${isActive ? 'bg-amber-950 border-amber-950 text-white' : 'bg-white border-stone-300'}`}>
-                            {isActive && <Check size={12} strokeWidth={4} />}
-                          </div>
-                          <span className="text-xs font-black text-amber-950">{protein.name}</span>
+              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-amber-400 block mb-4">Choose Your Protein</span>
+              <div className="space-y-3">
+                {PROTEIN_OPTIONS.map(protein => {
+                  const isActive = selectedProteins.find(p => p.id === protein.id);
+                  return (
+                    <button
+                      key={protein.id}
+                      onClick={() => toggleProtein(protein)}
+                      className={`w-full flex items-center justify-between p-3 rounded-xl border transition-all ${isActive ? 'bg-amber-100 border-amber-400' : 'bg-white border-stone-200 hover:border-amber-300'}`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className={`w-5 h-5 rounded-md flex items-center justify-center border transition-all ${isActive ? 'bg-amber-950 border-amber-950 text-white' : 'bg-white border-stone-300'}`}>
+                          {isActive && <Check size={12} strokeWidth={4} />}
                         </div>
-                        <span className="text-[10px] font-bold text-amber-800">+₦{protein.price.toLocaleString()}</span>
-                      </button>
-                    );
-                  })}
-               </div>
+                        <span className="text-xs font-black text-amber-400">{protein.name}</span>
+                      </div>
+                      <span className="text-[10px] font-bold text-amber-400">+₦{protein.price.toLocaleString()}</span>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           </div>
         )}
@@ -143,27 +142,27 @@ const FoodCard: React.FC<FoodCardProps> = ({ item: initialItem, onAddToCart, car
             <span className="text-[10px] uppercase tracking-widest text-stone-300 font-black">Energy Scale</span>
             <span className="text-sm text-stone-600 font-bold">{selectedItem.calories} kcal</span>
           </div>
-          
+
           {mainQty > 0 ? (
             <div className="flex items-center gap-3 bg-amber-50 p-1.5 rounded-2xl border border-amber-100 shadow-inner">
-              <button 
-                onClick={() => mainQty === 1 ? onRemoveFromCart(selectedItem.id) : onUpdateQuantity(selectedItem.id, -1)} 
+              <button
+                onClick={() => mainQty === 1 ? onRemoveFromCart(selectedItem.id) : onUpdateQuantity(selectedItem.id, -1)}
                 className="w-10 h-10 flex items-center justify-center bg-white rounded-xl border border-stone-100 text-stone-500 hover:text-red-500 transition-all active:scale-95"
               >
                 <Minus size={16} />
               </button>
-              <span className="font-black text-amber-950 text-base min-w-[28px] text-center">{mainQty}</span>
-              <button 
-                onClick={() => onUpdateQuantity(selectedItem.id, 1)} 
-                className="w-10 h-10 flex items-center justify-center bg-amber-950 text-white rounded-xl shadow-lg hover:bg-black transition-all active:scale-95"
+              <span className="font-black text-amber-400 text-base min-w-[28px] text-center">{mainQty}</span>
+              <button
+                onClick={() => onUpdateQuantity(selectedItem.id, 1)}
+                className="w-10 h-10 flex items-center justify-center bg-amber-400 text-white rounded-xl shadow-lg hover:bg-black transition-all active:scale-95"
               >
                 <Plus size={16} />
               </button>
             </div>
           ) : (
-            <button 
+            <button
               onClick={() => onAddToCart(selectedItem, selectedProteins)}
-              className="bg-amber-950 text-white flex items-center gap-3 px-10 py-4.5 rounded-[1.5rem] font-black hover:bg-black transition-all group/btn shadow-xl active:scale-95"
+              className="bg-amber-400 text-white flex items-center gap-3 px-10 py-4.5 rounded-[1.5rem] font-black hover:bg-black transition-all group/btn shadow-xl active:scale-95"
             >
               <Plus size={18} className="group-hover/btn:rotate-90 transition-transform duration-500" />
               <span className="text-xs uppercase tracking-[0.2em]">Add to Pack</span>

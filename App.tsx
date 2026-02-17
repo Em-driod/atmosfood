@@ -78,14 +78,14 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#fcfcfc] text-amber-950 antialiased selection:bg-amber-100 relative">
+    <div className="min-h-screen bg-[#fcfcfc] text-amber-400 antialiased selection:bg-amber-100 relative">
       <Navbar cartCount={cartCount} onCartClick={() => setIsCartOpen(true)} />
 
       {/* Background Decorative Elements */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-amber-200/20 blur-[120px] rounded-full animate-float-slow" />
         <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-amber-100/30 blur-[150px] rounded-full" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full border-[1px] border-amber-950/[0.02] rounded-full scale-[1.5]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full border-[1px] border-amber-400/[0.02] rounded-full scale-[1.5]" />
       </div>
 
       {/* Atmospheric Toast */}
@@ -103,11 +103,11 @@ const App: React.FC = () => {
         <section className="relative pt-44 pb-32 flex flex-col items-center text-center lg:text-left lg:flex-row lg:items-center lg:justify-between gap-16 xl:gap-24 overflow-visible">
 
           <div className="flex-1 space-y-12 reveal-up">
-            <div className="inline-flex items-center gap-3 bg-amber-950 text-amber-400 px-6 py-2.5 rounded-full text-[10px] font-black uppercase tracking-[0.4em] shadow-xl border border-amber-900/50">
+            <div className="inline-flex items-center gap-3 bg-amber-400 text-amber-100 px-6 py-2.5 rounded-full text-[10px] font-black uppercase tracking-[0.4em] shadow-xl border border-amber-900/50">
               <Sparkles size={14} fill="currentColor" className="animate-pulse" /> The Atmos Experience
             </div>
 
-            <h2 className="text-6xl md:text-7xl font-serif font-black leading-[0.95] tracking-tighter text-amber-950">
+            <h2 className="text-6xl md:text-7xl font-serif font-black leading-[0.95] tracking-tighter text-amber-400">
               Crave the <br />
               <span className="relative">
                 <span className="text-amber-600 italic font-medium pr-4">Authentic.</span>
@@ -124,7 +124,7 @@ const App: React.FC = () => {
             <div className="flex flex-col sm:flex-row items-center gap-8 pt-6 justify-center lg:justify-start">
               <button
                 onClick={() => menuRef.current?.scrollIntoView({ behavior: 'smooth' })}
-                className="group relative bg-amber-950 text-white px-14 py-7 rounded-2xl font-black flex items-center gap-4 transition-all hover:bg-black hover:shadow-[0_20px_40px_rgba(0,0,0,0.3)] active:scale-95 text-base uppercase tracking-[0.2em] overflow-hidden"
+                className="group relative bg-amber-400 text-white px-14 py-7 rounded-2xl font-black flex items-center gap-4 transition-all hover:bg-black hover:shadow-[0_20px_40px_rgba(0,0,0,0.3)] active:scale-95 text-base uppercase tracking-[0.2em] overflow-hidden"
               >
                 <span className="relative z-10">Enter the Kitchen</span>
                 <MoveRight size={24} className="group-hover:translate-x-2 transition-transform duration-500 relative z-10" />
@@ -146,15 +146,15 @@ const App: React.FC = () => {
 
             <div className="grid grid-cols-3 gap-8 pt-16 border-t border-amber-100/50 max-w-lg mx-auto lg:mx-0">
               <div className="flex flex-col gap-2">
-                <span className="text-2xl font-serif font-black text-amber-950">30m</span>
+                <span className="text-2xl font-serif font-black text-amber-400">30m</span>
                 <span className="text-[9px] font-black uppercase tracking-widest text-stone-400">Mainland Priority</span>
               </div>
               <div className="flex flex-col gap-2">
-                <span className="text-2xl font-serif font-black text-amber-950">100%</span>
+                <span className="text-2xl font-serif font-black text-amber-400">100%</span>
                 <span className="text-[9px] font-black uppercase tracking-widest text-stone-400">Atmos Certified</span>
               </div>
               <div className="flex flex-col gap-2">
-                <span className="text-2xl font-serif font-black text-amber-950">₦0</span>
+                <span className="text-2xl font-serif font-black text-amber-400">₦0</span>
                 <span className="text-[9px] font-black uppercase tracking-widest text-stone-400">Island Concierge</span>
               </div>
             </div>
@@ -170,12 +170,12 @@ const App: React.FC = () => {
                 </div>
                 <div className="bg-white/80 backdrop-blur-xl p-6 rounded-[2rem] shadow-xl border border-white/50 space-y-2">
                   <div className="flex gap-1 text-amber-500"><Star size={12} fill="currentColor" /><Star size={12} fill="currentColor" /><Star size={12} fill="currentColor" /><Star size={12} fill="currentColor" /><Star size={12} fill="currentColor" /></div>
-                  <p className="text-[10px] font-black uppercase tracking-widest text-amber-950">"The best Jollof on the Island, period."</p>
+                  <p className="text-[10px] font-black uppercase tracking-widest text-amber-400">"The best Jollof on the Island, period."</p>
                 </div>
               </div>
 
               <div className="space-y-6">
-                <div className="bg-amber-950 p-8 rounded-[2rem] shadow-2xl text-white space-y-4">
+                <div className="bg-amber-400 p-8 rounded-[2rem] shadow-2xl text-white space-y-4">
                   <Award className="text-amber-400" size={32} />
                   <h4 className="text-2xl font-serif font-black leading-tight">Master <br /> Selection</h4>
                   <p className="text-[10px] font-medium text-amber-100 uppercase tracking-widest leading-relaxed">Curated by our top Atmos chefs for the elite palate.</p>
@@ -192,7 +192,7 @@ const App: React.FC = () => {
                 <div className="w-12 h-12 bg-amber-50 rounded-2xl flex items-center justify-center text-amber-600"><Flame fill="currentColor" size={24} /></div>
                 <div>
                   <span className="text-[10px] font-black uppercase tracking-[0.2em] text-stone-300 block">Currently Trending</span>
-                  <span className="text-sm font-black text-amber-950">Smoky Atmos Mix</span>
+                  <span className="text-sm font-black text-amber-400">Smoky Atmos Mix</span>
                 </div>
               </div>
             </div>
@@ -206,7 +206,7 @@ const App: React.FC = () => {
               <div className="text-amber-600 font-black uppercase tracking-[0.5em] text-[12px]">
                 The Three Delicacies
               </div>
-              <h3 className="text-5xl md:text-7xl font-serif font-black text-amber-950 tracking-tighter leading-none">
+              <h3 className="text-5xl md:text-7xl font-serif font-black text-amber-400 tracking-tighter leading-none">
                 Essential Atmosphere
               </h3>
               <p className="text-stone-400 text-xl max-w-xl font-medium leading-relaxed">
@@ -219,7 +219,7 @@ const App: React.FC = () => {
                   key={cat}
                   onClick={() => setSelectedCategory(cat)}
                   className={`flex items-center gap-3 px-10 py-5 rounded-2xl font-black transition-all whitespace-nowrap text-[13px] uppercase tracking-[0.2em] border-2 ${selectedCategory === cat
-                    ? 'bg-amber-950 text-white border-amber-950 shadow-xl scale-105'
+                    ? 'bg-amber-400 text-white border-amber-400 shadow-xl scale-105'
                     : 'bg-white text-stone-400 border-stone-100 hover:border-amber-200 hover:text-amber-800'
                     }`}
                 >
@@ -253,7 +253,7 @@ const App: React.FC = () => {
         </section>
       </main>
 
-      <footer className="bg-white text-amber-950 pt-32 pb-20 px-6 border-t border-stone-100 relative z-10">
+      <footer className="bg-white text-amber-400 pt-32 pb-20 px-6 border-t border-stone-100 relative z-10">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16">
           <div className="space-y-8 lg:col-span-1">
             <div className="flex items-center gap-4">
@@ -264,11 +264,11 @@ const App: React.FC = () => {
           </div>
 
           <div className="space-y-8">
-            <h4 className="font-black text-amber-950 uppercase tracking-[0.4em] text-[12px]">The Collective</h4>
+            <h4 className="font-black text-amber-400 uppercase tracking-[0.4em] text-[12px]">The Collective</h4>
             <ul className="space-y-5 text-[12px] font-bold text-stone-500 uppercase tracking-[0.2em]">
-              <li className="hover:text-amber-950 cursor-pointer transition-colors">Mainland Kitchen</li>
-              <li className="hover:text-amber-950 cursor-pointer transition-colors">Island Concierge</li>
-              <li className="hover:text-amber-950 cursor-pointer transition-colors">Atmos Bulk Packs</li>
+              <li className="hover:text-amber-400 cursor-pointer transition-colors">Mainland Kitchen</li>
+              <li className="hover:text-amber-400 cursor-pointer transition-colors">Island Concierge</li>
+              <li className="hover:text-amber-400 cursor-pointer transition-colors">Atmos Bulk Packs</li>
             </ul>
           </div>
 
