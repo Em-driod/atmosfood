@@ -42,6 +42,17 @@ export const FOOD_ITEMS: FoodItem[] = [
     calories: 540,
     tags: ['Best Value']
   },
+  {
+    id: 'grain-4',
+    name: 'Ofada Rice and Sause',
+    description: 'Traditional Nigerian unpolished rice served with a spicy, flavourful stew.',
+    price: 6000,
+    category: FoodCategory.GRAINS,
+    image: '/OFADA RICE, SAUCE & EGG.jpeg',
+    rating: 4.7,
+    calories: 580,
+    tags: ['Traditional', 'Spicy']
+  },
 
   // DRINKS
   {

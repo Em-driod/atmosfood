@@ -23,10 +23,7 @@ const FoodCard: React.FC<FoodCardProps> = ({ item: initialItem, onAddToCart, car
 
   const getQuantity = (id: string) => cart.find(c => c.id === id)?.quantity || 0;
 
-  const handleBaseChange = (id: string) => {
-    const found = FOOD_ITEMS.find(f => f.id === id);
-    if (found) setSelectedItem(found);
-  };
+
 
   const toggleProtein = (protein: ProteinOption) => {
     setSelectedProteins(prev =>
@@ -81,37 +78,13 @@ const FoodCard: React.FC<FoodCardProps> = ({ item: initialItem, onAddToCart, car
           {selectedItem.description}
         </p>
 
-        {/* Grain Base Selector */}
+
+
+        {/* Protein Selection */}
         {isGrainItem && (
           <div className="mb-6 space-y-6">
-            <div className="bg-amber-400 rounded-2xl p-4 border border-amber-100 shadow-inner">
-              <div className="flex items-center gap-2 mb-4">
-                <Layers size={14} className="text-amber-800" />
-                <span className="text-[10px] font-black uppercase tracking-[0.2em] text-amber-900">Switch Delicacy</span>
-              </div>
-              <div className="grid grid-cols-3 gap-2.5">
-                {[
-                  { id: 'grain-1', label: 'Jollof' },
-                  { id: 'grain-2', label: 'Fried' },
-                  { id: 'grain-3', label: 'The Mix' }
-                ].map(base => (
-                  <button
-                    key={base.id}
-                    onClick={() => handleBaseChange(base.id)}
-                    className={`py-3 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border ${selectedItem.id === base.id
-                      ? 'bg-amber-400 text-white border-white shadow-lg scale-[1.05]'
-                      : 'bg-white text-stone-400 border-stone-200 hover:border-amber-800 hover:text-amber-800'
-                      }`}
-                  >
-                    {base.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Protein Selection */}
             <div className="bg-stone-50 rounded-2xl p-5 border border-stone-100">
-              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-amber-400 block mb-4">Choose Your Protein</span>
+              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-amber-950 block mb-4">Choose Your Protein</span>
               <div className="space-y-3">
                 {PROTEIN_OPTIONS.map(protein => {
                   const isActive = selectedProteins.find(p => p.id === protein.id);
@@ -125,9 +98,9 @@ const FoodCard: React.FC<FoodCardProps> = ({ item: initialItem, onAddToCart, car
                         <div className={`w-5 h-5 rounded-md flex items-center justify-center border transition-all ${isActive ? 'bg-amber-950 border-amber-950 text-white' : 'bg-white border-stone-300'}`}>
                           {isActive && <Check size={12} strokeWidth={4} />}
                         </div>
-                        <span className="text-xs font-black text-amber-400">{protein.name}</span>
+                        <span className="text-xs font-black text-amber-950">{protein.name}</span>
                       </div>
-                      <span className="text-[10px] font-bold text-amber-400">+₦{protein.price.toLocaleString()}</span>
+                      <span className="text-[10px] font-bold text-amber-950">+₦{protein.price.toLocaleString()}</span>
                     </button>
                   );
                 })}

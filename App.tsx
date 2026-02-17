@@ -11,9 +11,7 @@ import CheckoutModal from './components/CheckoutModal';
 import { ArrowRight, Soup, Milk, Flame, Utensils, Star, CheckCircle2, Award, Clock, MapPin, Truck, Sparkles, MoveRight } from 'lucide-react';
 
 const App: React.FC = () => {
-  const MENU_CATEGORIES = [FoodCategory.ALL, FoodCategory.GRAINS];
 
-  const [selectedCategory, setSelectedCategory] = useState<FoodCategory>(FoodCategory.ALL);
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isDrinksOpen, setIsDrinksOpen] = useState(false);
@@ -22,10 +20,8 @@ const App: React.FC = () => {
   const menuRef = useRef<HTMLDivElement>(null);
 
   const filteredItems = useMemo(() => {
-    let items = FOOD_ITEMS.filter(item => item.category !== FoodCategory.DRINKS);
-    if (selectedCategory === FoodCategory.ALL) return items;
-    return items.filter(item => item.category === selectedCategory);
-  }, [selectedCategory]);
+    return FOOD_ITEMS.filter(item => item.category !== FoodCategory.DRINKS);
+  }, []);
 
   const addToCart = (item: FoodItem, proteins?: ProteinOption[]) => {
     setCart(prev => {
@@ -36,7 +32,9 @@ const App: React.FC = () => {
       return [...prev, { ...item, quantity: 1, selectedProteins: proteins }];
     });
 
-    if (item.category === FoodCategory.GRAINS) {
+    if (item.category === FoodCategory.DRINKS) {
+      setShowToast({ message: `Thirst Quenched! ${item.name} added!`, isNext: false });
+    } else if (item.category === FoodCategory.GRAINS) {
       setShowToast({ message: `Elite Choice! Adding a drink?`, isNext: true });
       setTimeout(() => {
         setIsDrinksOpen(true);
@@ -213,28 +211,7 @@ const App: React.FC = () => {
                 A strictly curated trio of Nigerian rice heritage, refined for the modern standard.
               </p>
             </div>
-            <div className="flex items-center gap-4 overflow-x-auto pb-6 lg:pb-0 scrollbar-hide">
-              {MENU_CATEGORIES.map((cat) => (
-                <button
-                  key={cat}
-                  onClick={() => setSelectedCategory(cat)}
-                  className={`flex items-center gap-3 px-10 py-5 rounded-2xl font-black transition-all whitespace-nowrap text-[13px] uppercase tracking-[0.2em] border-2 ${selectedCategory === cat
-                    ? 'bg-amber-400 text-white border-amber-400 shadow-xl scale-105'
-                    : 'bg-white text-stone-400 border-stone-100 hover:border-amber-200 hover:text-amber-800'
-                    }`}
-                >
-                  {getCategoryIcon(cat)}
-                  {cat}
-                </button>
-              ))}
-              <button
-                onClick={() => setIsDrinksOpen(true)}
-                className="flex items-center gap-3 px-10 py-5 rounded-2xl font-black transition-all whitespace-nowrap text-[13px] uppercase tracking-[0.2em] bg-amber-400 text-amber-950 border-2 border-amber-300 hover:bg-amber-500 shadow-lg"
-              >
-                <Milk size={20} />
-                Chilled Bar
-              </button>
-            </div>
+
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16">

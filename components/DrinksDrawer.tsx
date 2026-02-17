@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { X, Milk, Plus, Minus, Star, Flame } from 'lucide-react';
 import { FoodItem, CartItem } from '../types';
 import { FOOD_ITEMS } from '../constants';
@@ -16,7 +16,70 @@ interface DrinksDrawerProps {
 
 const DrinksDrawer: React.FC<DrinksDrawerProps> = ({ isOpen, onClose, cart, onAddToCart, onUpdateQuantity, onRemoveFromCart }) => {
   const drinks = FOOD_ITEMS.filter(item => item.category === FoodCategory.DRINKS);
-  const getQuantity = (id: string) => cart.find(c => c.id === id)?.quantity || 0;
+  const [tempDrinks, setTempDrinks] = useState<CartItem[]>([]);
+
+  useEffect(() => {
+    if (isOpen) {
+      // Initialize tempDrinks with drinks already in the main cart
+      const currentCartDrinks = cart.filter(item => item.category === FoodCategory.DRINKS);
+      setTempDrinks(currentCartDrinks);
+    }
+  }, [isOpen, cart]);
+
+  const getLocalQuantity = (id: string) => tempDrinks.find(c => c.id === id)?.quantity || 0;
+
+  const handleLocalAddToCart = (item: FoodItem) => {
+    setTempDrinks(prev => {
+      const existing = prev.find(i => i.id === item.id);
+      if (existing) {
+        return prev.map(i => i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i);
+      }
+      return [...prev, { ...item, quantity: 1 }];
+    });
+  };
+
+  const handleLocalUpdateQuantity = (id: string, delta: number) => {
+    setTempDrinks(prev => {
+      const newItems = prev.map(i => {
+        if (i.id === id) {
+          const newQty = Math.max(0, i.quantity + delta);
+          return { ...i, quantity: newQty };
+        }
+        return i;
+      }).filter(i => i.quantity > 0); // Remove if quantity becomes 0
+      return newItems;
+    });
+  };
+
+  const handleAddSelectedDrinks = () => {
+    // First, remove existing drinks from the main cart that are no longer selected
+    cart.filter(item => item.category === FoodCategory.DRINKS).forEach(drink => {
+      if (!tempDrinks.some(td => td.id === drink.id)) {
+        onRemoveFromCart(drink.id);
+      }
+    });
+
+    // Add/update selected drinks to the main cart
+    tempDrinks.forEach(drink => {
+      const existingCartItem = cart.find(item => item.id === drink.id);
+      if (existingCartItem) {
+        // Only update if quantity changed, to avoid unnecessary re-renders
+        if (existingCartItem.quantity !== drink.quantity) {
+          // This assumes onUpdateQuantity handles delta, so calculate difference
+          const delta = drink.quantity - existingCartItem.quantity;
+          if (delta > 0) {
+            for (let i = 0; i < delta; i++) onAddToCart(drink);
+          } else if (delta < 0) {
+            for (let i = 0; i < Math.abs(delta); i++) onUpdateQuantity(drink.id, -1);
+          }
+        }
+      } else {
+        // Add new drinks
+        for (let i = 0; i < drink.quantity; i++) onAddToCart(drink);
+      }
+    });
+    onClose();
+  };
 
   return (
     <>
@@ -51,7 +114,7 @@ const DrinksDrawer: React.FC<DrinksDrawerProps> = ({ isOpen, onClose, cart, onAd
 
           <div className="flex-1 overflow-x-auto flex items-center gap-6 pb-4 scrollbar-hide">
             {drinks.map((drink) => {
-              const qty = getQuantity(drink.id);
+              const qty = getLocalQuantity(drink.id);
               return (
                 <div key={drink.id} className="min-w-[280px] md:min-w-[320px] bg-white rounded-3xl p-4 border border-stone-100 shadow-sm hover:shadow-xl transition-all duration-500 flex items-center gap-5 group">
                   <div className="relative w-24 h-24 shrink-0 overflow-hidden rounded-2xl">
@@ -66,13 +129,13 @@ const DrinksDrawer: React.FC<DrinksDrawerProps> = ({ isOpen, onClose, cart, onAd
                     
                     {qty > 0 ? (
                       <div className="flex items-center gap-2 bg-amber-50 p-1 rounded-xl w-fit border border-amber-100">
-                        <button onClick={() => qty === 1 ? onRemoveFromCart(drink.id) : onUpdateQuantity(drink.id, -1)} className="w-8 h-8 flex items-center justify-center bg-white rounded-lg text-stone-600 hover:text-red-500 shadow-sm"><Minus size={12} /></button>
+                        <button onClick={() => handleLocalUpdateQuantity(drink.id, -1)} className="w-8 h-8 flex items-center justify-center bg-white rounded-lg text-stone-600 hover:text-red-500 shadow-sm"><Minus size={12} /></button>
                         <span className="font-black text-xs w-5 text-center">{qty}</span>
-                        <button onClick={() => onUpdateQuantity(drink.id, 1)} className="w-8 h-8 flex items-center justify-center bg-amber-950 text-white rounded-lg shadow-sm"><Plus size={12} /></button>
+                        <button onClick={() => handleLocalUpdateQuantity(drink.id, 1)} className="w-8 h-8 flex items-center justify-center bg-amber-950 text-white rounded-lg shadow-sm"><Plus size={12} /></button>
                       </div>
                     ) : (
                       <button 
-                        onClick={() => onAddToCart(drink)}
+                        onClick={() => handleLocalAddToCart(drink)}
                         className="flex items-center gap-2 bg-amber-950 text-white px-5 py-2.5 rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-black transition-all"
                       >
                         <Plus size={14} /> Add Cold
@@ -86,10 +149,10 @@ const DrinksDrawer: React.FC<DrinksDrawerProps> = ({ isOpen, onClose, cart, onAd
 
           <div className="mt-8 flex justify-center">
             <button 
-                onClick={onClose}
-                className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.4em] text-stone-400 hover:text-amber-950 transition-colors"
+                onClick={handleAddSelectedDrinks}
+                className="flex items-center gap-2 px-8 py-4 bg-amber-950 text-white rounded-xl font-black uppercase tracking-[0.3em] hover:bg-black transition-all"
             >
-                Back to Food <Plus size={12} className="rotate-45" />
+                Add Selected Drinks
             </button>
           </div>
         </div>
